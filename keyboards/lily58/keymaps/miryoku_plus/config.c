@@ -20,3 +20,20 @@ XXX, K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19, XXX,\
 XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
                XXX, K32, K33, K34,      K35, K36, K37, XXX\
 )
+
+// default but used in macros
+#define TAPPING_TERM 180
+
+// Prevent normal rollover on alphas from accidentally triggering mods.
+#define IGNORE_MOD_TAP_INTERRUPT
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+#define TAPPING_FORCE_HOLD
+
+// Auto Shift
+#define NO_AUTO_SHIFT_ALPHA
+#define AUTO_SHIFT_TIMEOUT TAPPING_TERM
+#define AUTO_SHIFT_NO_SETUP
+
+// Recommended for heavy chording.
+#define QMK_KEYS_PER_SCAN 4
