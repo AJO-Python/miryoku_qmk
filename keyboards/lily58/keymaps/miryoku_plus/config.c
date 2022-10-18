@@ -37,3 +37,6 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
+
+// Activates caps for one word
+#define BOTH_SHIFTS_TURN_ON_CAPS_WORD
