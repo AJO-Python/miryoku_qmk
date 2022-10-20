@@ -39,4 +39,10 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 #define QMK_KEYS_PER_SCAN 4
 
 // Activates caps for one word
-#define BOTH_SHIFTS_TURN_ON_CAPS_WORD
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+#ifdef OLED_DRIVER_ENABLE
+  #define OLED_DISPLAY_128X64
+#endif
+#define SPLIT_USB_DETECT
+#define NO_USB_STARTUP_CHECK
