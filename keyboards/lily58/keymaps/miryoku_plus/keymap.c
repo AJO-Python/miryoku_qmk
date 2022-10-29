@@ -108,6 +108,10 @@ bool should_process_keypress(void) {
 //static bool shift_held = false;
 uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static uint16_t my_comma_timer;
+  static uint16_t my_dot_timer;
+  static uint16_t my_slash_timer;
+
   if (record->event.pressed) {
     #ifdef OLED_ENABLE
       set_keylog(keycode, record);
@@ -117,20 +121,105 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   mod_state = get_mods();
   switch (keycode) {
+    
+    // - on tap -> _ on hold
+    case KC_MINS: {
+      if (record->event.pressed) {
+        my_slash_timer = timer_read();
+      } else {
+        if (timer_elapsed(my_slash_timer) < TAPPING_TERM) {
+          SEND_STRING("-");
+        } else {
+          SEND_STRING("_");
+          }
+        return true;
+      }
+      return false;
+    }
+
+    // / on tap -> \ on hold
+    case KC_SLSH: {
+      if (record->event.pressed) {
+        my_slash_timer = timer_read();
+      } else {
+        if (timer_elapsed(my_slash_timer) < TAPPING_TERM) {
+          SEND_STRING("/");
+        } else {
+          if (mod_state & MOD_MASK_SHIFT) {
+            SEND_STRING("!");
+          } else {
+            send_char(92);
+          }
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // , on tap -> ; on hold
+    case KC_COMM: {
+      if (record->event.pressed) {
+        my_comma_timer = timer_read();
+      } else {
+        if (timer_elapsed(my_comma_timer) < TAPPING_TERM) {
+          SEND_STRING(",");
+        } else {
+          SEND_STRING(";");
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // . on tap -> : on hold
+    case KC_DOT: {
+      if (record->event.pressed) {
+        my_dot_timer = timer_read();
+      } else {
+        if (timer_elapsed(my_dot_timer) < TAPPING_TERM) {
+          SEND_STRING(".");
+        } else {
+          SEND_STRING(":");
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // shift ' == "
     case KC_QUOT: {
       if (record->event.pressed) {
         if (mod_state & MOD_MASK_SHIFT) {
           register_code(KC_2);
         } else {
-          register_code(KC_QUOTE);
+          register_code(KC_QUOT);
         }
       } else {
           unregister_code(KC_2);
-          unregister_code(KC_QUOTE);
+          unregister_code(KC_QUOT);
       }
       return false;
     }
+    
+    // shift backtick == ```
+    case KC_GRV: {
+      if (record->event.pressed) {
+        if (mod_state & MOD_MASK_SHIFT) {
+          del_mods(MOD_MASK_SHIFT);
+          SEND_STRING("```");
+          set_mods(mod_state);
+        } else {
+          register_code(KC_GRV);
+        }
+      } else {
+          unregister_code(KC_GRV);
+      }
+      return false;
+    }
+
+    // end switch case
     return true;
   };
   return true;
 }
+
