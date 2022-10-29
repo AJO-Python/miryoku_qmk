@@ -17,8 +17,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // NAV (backspace)
 	[1] = LAYOUT(    
       KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,             KC_NO,   KC_NO,         KC_NO,          KC_NO,          KC_NO,          KC_NO,
-      KC_NO,       KC_PGUP,        KC_MPRV,        KC_MPLY,       KC_MNXT,        KC_VOLU,           KC_NO,   KC_PGDN,       KC_PGUP,        KC_NO,          KC_NO,          KC_NO,
-      KC_NO,       KC_LCTL,        KC_LALT,        KC_LGUI,        KC_LSFT,        KC_VOLD,           KC_LEFT, KC_UP,         KC_DOWN,        KC_RIGHT,       KC_NO,          KC_NO,
+      KC_NO,       KC_PGUP,        KC_MPRV,        KC_MPLY,        KC_MNXT,        KC_VOLU,           KC_NO,   KC_PGDN,       KC_PGUP,        KC_NO,          KC_NO,          KC_NO,
+      KC_NO,       KC_LCTL,        KC_LALT,        KC_LGUI,        KC_LSFT,        KC_VOLD,           KC_LEFT, KC_DOWN,       KC_UP,          KC_RIGHT,       KC_NO,          KC_NO,
       KC_NO,       KC_NO,          KC_NO,          KC_INS,         KC_NO,          KC_NO, KC_NO,KC_NO,KC_NO,   KC_HOME,       KC_END,         KC_VOLU,        KC_NO,          KC_NO,
                                    KC_NO,          KC_NO,          KC_NO,          KC_NO,             KC_NO,   LT(1,KC_BSPC), KC_NO,          KC_NO
       ),
