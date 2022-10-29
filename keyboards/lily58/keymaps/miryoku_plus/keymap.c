@@ -107,17 +107,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #endif
     // set_timelog();
   }
+
+  mod_state = get_mods();
   switch (keycode) {
-    case LT(0, KC_QUOTE):
-      if (record->tap.count && record->event.pressed) {
-          tap_code16(KC_QUOTE);
-      } else if (record->event.pressed) {
-          register_code(KC_LSFT);
-          tap_code16(KC_QUOTE);
-          unregister_code(KC_LSFT);
+    case KC_QUOT: {
+      if (record->event.pressed) {
+        if (mod_state & MOD_MASK_SHIFT) {
+          register_code(KC_2);
+        } else {
+          register_code(KC_QUOTE);
+        }
+      } else {
+          unregister_code(KC_2);
+          unregister_code(KC_QUOTE);
       }
       return false;
-      }
-
+    }
+    return true;
+  };
   return true;
 }
