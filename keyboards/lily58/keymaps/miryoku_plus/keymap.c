@@ -15,9 +15,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[1] = LAYOUT(    
       KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,             KC_NO,   KC_NO,         KC_NO,          KC_NO,          KC_NO,          KC_NO,
       KC_NO,       KC_PGUP,        KC_MPRV,        KC_MPLY,        KC_MNXT,        KC_VOLU,           KC_NO,   KC_PGDN,       KC_PGUP,        KC_NO,          KC_NO,          KC_NO,
-      KC_NO,       KC_LCTL,        KC_LALT,        KC_LGUI,        KC_LSFT,        KC_VOLD,           KC_LEFT, KC_DOWN,       KC_UP,          KC_RIGHT,       KC_NO,          KC_NO,
+      KC_NO,       KC_LCTL,        KC_LALT,        KC_LGUI,        KC_LSFT,        KC_VOLD,           KC_LEFT, KC_DOWN,       KC_UP,          KC_RIGHT,       KC_RCTL,          KC_NO,
       KC_NO,       KC_NO,          KC_NO,          KC_INS,         KC_NO,          KC_NO, KC_NO,KC_NO,KC_NO,   KC_HOME,       KC_END,         KC_VOLU,        KC_NO,          KC_NO,
-                                   KC_NO,          KC_ESC,          KC_SPC,         KC_TAB,             KC_ENT,   LT(1,KC_BSPC), KC_DEL,          KC_NO
+                                   KC_NO,          KC_ESC,         KC_SPC,         KC_TAB,            KC_ENT,  LT(1,KC_BSPC), KC_DEL,         KC_NO
       ),
 
   // BRACKETS (enter)
@@ -148,7 +148,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (mod_state & MOD_MASK_SHIFT) {
             SEND_STRING("!");
           } else {
-            send_char(92);
+            register_code(KC_NUBS);
+            unregister_code(KC_NUBS);
           }
         }
         return true;
