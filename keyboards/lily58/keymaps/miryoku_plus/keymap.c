@@ -1,13 +1,17 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+enum my_keycodes {
+  PWD_0 = SAFE_RANGE,
+  PWD_1
+};
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // COLEMAK-DH
 	[0] = LAYOUT(
       KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,             KC_NO,  KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
       KC_NO,       KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,              KC_J,   KC_L,           KC_U,           KC_Y,           KC_QUOT,        KC_NO,
       KC_NO,       LCTL_T(KC_A),   LALT_T(KC_R),   LGUI_T(KC_S),   LSFT_T(KC_T),   KC_G,              KC_M,   RSFT_T(KC_N),   RGUI_T(KC_E),   RALT_T(KC_I),   RCTL_T(KC_O),   KC_NO,
-      KC_NO,       KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,  KC_NO,KC_NO,KC_K,   KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,        KC_NO,
+      KC_NO,       KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,  PWD_0,PWD_1,KC_K,   KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,        KC_NO,
                                    KC_NO,          LT(6,KC_ESC),   LT(4,KC_SPC),   LT(5,KC_TAB),      LT(2,KC_ENT),LT(1,KC_BSPC),LT(3,KC_DEL),KC_NO
       ),
   
@@ -228,9 +232,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     }
 
+    // PWD_0
+    case PWD_0: {
+      if (record->event.pressed) {
+        if (mod_state & MOD_MASK_CTRL) {
+          del_mods(MOD_MASK_CTRL);
+          SEND_STRING("{{PWD_0}}"); 
+          set_mods(mod_state);
+          register_code(KC_ENTER); 
+          unregister_code(KC_ENTER);
+        } else {
+          register_code(KC_PSCR);
+          unregister_code(KC_PSCR);
+        }
+      } 
+      return false;
+    }
+
+    // PWD_1
+    case PWD_1: {
+      if (record->event.pressed) {
+        if (mod_state & MOD_MASK_CTRL) {
+          del_mods(MOD_MASK_CTRL);
+          SEND_STRING("{{PWD_1}}"); 
+          set_mods(mod_state);
+          register_code(KC_ENTER); 
+          unregister_code(KC_ENTER);
+        } else {
+          add_mods(MOD_MASK_SHIFT);
+          register_code(KC_QUOT);
+          unregister_code(KC_QUOT);
+          set_mods(mod_state);
+        }
+      }
+      return false;
+    }
+
     // end switch case
     return true;
   };
   return true;
 }
-
